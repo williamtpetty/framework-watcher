@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="graph">
     <h1>{{ message }}</h1>
     <div>
       <button v-on:click="toggleVue = !toggleVue">Show Vue Data</button>
@@ -45,6 +45,7 @@
         <p>Watchers: {{ this.reactData.watchers_count }}</p>
       </div>
     </div>
+    <bar-chart></bar-chart>
   </div>
 </template>
 
@@ -52,8 +53,10 @@
 
 <script>
 import axios from "axios";
+import BarChart from "./BarChart.vue";
 
 export default {
+  components: { BarChart },
   data: function () {
     return {
       message: "Welcome to Vue.js!",

@@ -1,16 +1,50 @@
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
-    <button v-on:click="getVueData()">Get Vue Data</button>
-    <br />
-    <button v-on:click="getAngularData()">Get Angular Data</button>
-    <br />
-    <button v-on:click="getEmberData()">Get Ember Data</button>
-    <br />
-    <button v-on:click="getSvelteData()">Get Svelte Data</button>
-    <br />
-    <button v-on:click="getReactData()">Get React Data</button>
-    <br />
+    <div>
+      <button v-on:click="toggleVue = !toggleVue">Show Vue Data</button>
+      <div v-show="toggleVue">
+        <p>Forks: {{ this.vueData.forks }}</p>
+        <p>Subscribers: {{ this.vueData.subscribers_count }}</p>
+        <p>Watchers: {{ this.vueData.watchers_count }}</p>
+      </div>
+    </div>
+    <div>
+      <button v-on:click="toggleAngular = !toggleAngular">
+        Show Angular Data
+      </button>
+      <div v-show="toggleAngular">
+        <p>Forks: {{ this.angularData.forks }}</p>
+        <p>Subscribers: {{ this.angularData.subscribers_count }}</p>
+        <p>Watchers: {{ this.angularData.watchers_count }}</p>
+      </div>
+    </div>
+    <div>
+      <button v-on:click="toggleEmber = !toggleEmber">Show Ember Data</button>
+      <div v-show="toggleEmber">
+        <p>Forks: {{ this.emberData.forks }}</p>
+        <p>Subscribers: {{ this.emberData.subscribers_count }}</p>
+        <p>Watchers: {{ this.emberData.watchers_count }}</p>
+      </div>
+    </div>
+    <div>
+      <button v-on:click="toggleSvelte = !toggleSvelte">
+        Show Svelte Data
+      </button>
+      <div v-show="toggleSvelte">
+        <p>Forks: {{ this.svelteData.forks }}</p>
+        <p>Subscribers: {{ this.svelteData.subscribers_count }}</p>
+        <p>Watchers: {{ this.svelteData.watchers_count }}</p>
+      </div>
+    </div>
+    <div>
+      <button v-on:click="toggleReact = !toggleReact">Show React Data</button>
+      <div v-show="toggleReact">
+        <p>Forks: {{ this.reactData.forks }}</p>
+        <p>Subscribers: {{ this.reactData.subscribers_count }}</p>
+        <p>Watchers: {{ this.reactData.watchers_count }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -28,18 +62,26 @@ export default {
       emberData: {},
       svelteData: {},
       reactData: {},
+      toggleVue: false,
+      toggleAngular: false,
+      toggleEmber: false,
+      toggleSvelte: false,
+      toggleReact: false,
     };
   },
-  created: function () {},
+  created: function () {
+    this.getVueData();
+    this.getAngularData();
+    this.getEmberData();
+    this.getSvelteData();
+    this.getReactData();
+  },
   methods: {
     getVueData: function () {
       fetch("https://api.github.com/repos/vuejs/vue")
         .then((response) => response.json())
         .then((data) => {
           this.vueData = data;
-          console.log(this.vueData.forks_count);
-          console.log(this.vueData.subscribers_count);
-          console.log(this.vueData.watchers_count);
         })
         .catch((error) => {
           console.error(
@@ -54,9 +96,6 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.angularData = data;
-          console.log(this.angularData.forks_count);
-          console.log(this.angularData.subscribers_count);
-          console.log(this.angularData.watchers_count);
         })
         .catch((error) => {
           console.error(
@@ -70,9 +109,6 @@ export default {
       axios
         .get("https://api.github.com/repos/emberjs/ember.js")
         .then((response) => {
-          console.log(response.data.forks_count);
-          console.log(response.data.subscribers_count);
-          console.log(response.data.watchers_count);
           this.emberData = response.data;
         })
         .catch((error) => console.log(error.response.data.errors));
@@ -82,9 +118,6 @@ export default {
       axios
         .get("https://api.github.com/repos/sveltejs/svelte")
         .then((response) => {
-          console.log(response.data.forks_count);
-          console.log(response.data.subscribers_count);
-          console.log(response.data.watchers_count);
           this.svelteData = response.data;
         });
     },
@@ -94,9 +127,6 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.reactData = data;
-          console.log(this.reactData.forks_count);
-          console.log(this.reactData.subscribers_count);
-          console.log(this.reactData.watchers_count);
         })
         .catch((error) => {
           console.log(
